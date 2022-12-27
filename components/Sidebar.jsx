@@ -12,12 +12,14 @@ import { auth, db } from "../firebase";
 import { collection, doc, addDoc, where, query } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Chat from "./Chat";
+import Image from "next/image";
 
 const Sidebar = () => {
   const [user] = useAuthState(auth);
   const useChatRef = collection(db, "chats");
   const q = query(useChatRef, where("users", "array-contains", user.email));
   const [chatsSnapshot] = useCollection(q);
+//   console.log(chatsSnapshot);
 
   const createChat = () => {
     const input = prompt(
@@ -51,7 +53,8 @@ const Sidebar = () => {
   return (
     <div>
       <div className={css.header}>
-        <Avatar onClick={() => auth.signOut()} className={css.avatar} />
+        <Avatar src={user.photoURL} alt='profile' onClick={() => auth.signOut()} className={css.avatar} />
+        
 
         <div>
           <IconButton>
