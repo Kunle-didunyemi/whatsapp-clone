@@ -60,3 +60,15 @@
     background-color: #e5ded8;
     min-height: 90vh;
 }
+.timestamp{
+    color: gray;
+padding: 10px;
+font-size: 9px;
+position: absolute;
+bottom: 0;
+text-align: right;
+right: 0;
+}
+.endOfMessage{
+    margin-bottom: 50px;
+}
