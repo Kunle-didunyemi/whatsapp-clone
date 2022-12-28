@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Message = ({user, Message}) => {
+const Message = ({user, message}) => {
   return (
     <div>
-        <p>{Message}</p>
+        <p>{message.message}</p>
     </div>
   )
 }
