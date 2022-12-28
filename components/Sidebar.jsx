@@ -51,7 +51,7 @@ const Sidebar = () => {
     );
 
   return (
-    <div>
+    <div className={css.container}>
       <div className={css.header}>
         <Avatar src={user.photoURL} alt='profile' onClick={() => auth.signOut()} className={css.avatar} />
         

@@ -12,3 +12,51 @@
     display: none;
 
 }
+.chatHeader{
+    position: sticky;
+    background-color: white;
+    z-index: 100;
+    top: 0;
+    display: flex;
+    padding: 11px;
+    height: 80px;
+    align-items: center;
+    border-bottom: 1px solid whitesmoke;
+}
+.headerInfo{
+    margin-left: 15px;
+    flex: 1;
+}
+.headerInfo > h3{
+    margin-bottom: 3px;
+
+}
+.headerInfo > p{
+    font-size: 14px;
+    color: gray;
+}
+.inputContainer{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    z-index: 100;
+}
+.messageInput{
+    flex: 1;
+    outline: 0;
+    border-radius: 10px;
+    border: none;
+    background-color: whitesmoke;
+    padding: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+
+}
+.messageContainer{
+    padding: 30px;
+    background-color: #e5ded8;
+    min-height: 90vh;
+}
