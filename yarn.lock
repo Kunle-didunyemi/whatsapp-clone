@@ -1182,7 +1182,7 @@ cliui@^7.0.2:
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
 
-clsx@^1.0.4:
+clsx@^1.0.4, clsx@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
   integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
@@ -1347,6 +1347,13 @@ email-validator@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/email-validator/-/email-validator-2.0.4.tgz#b8dfaa5d0dae28f1b03c95881d904d4e40bfe7ed"
   integrity sha512-gYCwo7kh5S3IDyZPLZf6hSS0MnZT8QmJFqYvbqlDZSbwdZlY6QZWxJ4i/6UhITOJ4XzyI647Bm2MXKCLqnJ4nQ==
+
+emoji-picker-react@^4.4.7:
+  version "4.4.7"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.4.7.tgz#faff798cf7acad41c5eb6b103c93480e777f2222"
+  integrity sha512-HcB1Fr57W6M+gLLm/W4YhbAnUQqYBUAhZBOHmPlSQODLtsDI8vecyqNIF9RrStZHfZwzUSLlpZMfY07AA6gxmA==
+  dependencies:
+    clsx "^1.2.1"
 
 emoji-regex@^8.0.0:
   version "8.0.0"

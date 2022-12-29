@@ -1,5 +1,5 @@
 import { Avatar, Button, IconButton } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ChatIcon from "@material-ui/icons/Chat";
 import SearchIcon from "@material-ui/icons/Search";
@@ -13,8 +13,11 @@ import { collection, doc, addDoc, where, query } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Chat from "./Chat";
 import Image from "next/image";
+import ChatScreen from "./ChatScreen";
+import BlankScreen from "./BlankScreen";
 
 const Sidebar = () => {
+  const [show, setShow] = useState(false)
   const [user] = useAuthState(auth);
   const useChatRef = collection(db, "chats");
   const q = query(useChatRef, where("users", "array-contains", user.email));
@@ -51,18 +54,35 @@ const Sidebar = () => {
     );
 
   return (
+    <div className={css.homeContainer}>
+      <div className={css.greenBg}/>
     <div className={css.container}>
       <div className={css.header}>
-        <Avatar src={user.photoURL} alt='profile' onClick={() => auth.signOut()} className={css.avatar} />
+        <Avatar src={user.photoURL} alt='profile'  className={css.avatar} />
         
 
         <div>
-          <IconButton>
+          <IconButton
+         title= 'new chat'
+          onClick={createChat}>
             <ChatIcon />
           </IconButton>
-          <IconButton>
+          <IconButton
+          title="menu"
+          onClick={()=>setShow(!show)}
+          >
+            
             <MoreVertIcon />
           </IconButton>
+          {show && <div className={css.showToggle}>
+              <ul>
+                <li>menu</li>
+                
+                <li
+                onClick={() => auth.signOut()}
+                >log out</li>
+              </ul>
+            </div> }
         </div>
       </div>
       <div className="inputField" style={styles.inputField}>
@@ -79,6 +99,10 @@ const Sidebar = () => {
       {chatsSnapshot?.docs.map((chat) => (
         <Chat key={chat.id} id={chat.id} users={chat.data().users} />
       ))}
+      
+      
+    </div>
+    <BlankScreen/>
     </div>
   );
 };

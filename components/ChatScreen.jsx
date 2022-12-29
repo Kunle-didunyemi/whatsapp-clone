@@ -7,6 +7,7 @@ import css from "../styles/SingleChat.module.css";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import { useCollection } from "react-firebase-hooks/firestore";
+import SendIcon from '@material-ui/icons/Send';
 import {
   collection,
   doc,
@@ -23,6 +24,16 @@ import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MicIcon from "@material-ui/icons/Mic";
 import getRecipientEmail from "../utils/getRecipientEmail";
 import TimeAgo from "timeago-react";
+import EmojiPicker, {
+  EmojiStyle,
+  SkinTones,
+  Theme,
+  Categories,
+  EmojiClickData,
+  Emoji,
+  SuggestionMode,
+  SkinTonePickerLocation
+} from "emoji-picker-react";
 
 // const useChatRef = collection(db, "chats");
 //   const q = query(useChatRef, collection("messages").orderBy("timestamp", "asc"));
@@ -32,7 +43,9 @@ const ChatScreen = ({ chat, messages }) => {
     // console.log(chat, messages);
   const [user] = useAuthState(auth);
   const [input, setInput] = useState("");
+  const [emoji, setEmoji] = useState(false);
   const endOfMessageRef = useRef(null);
+  const [selectedEmoji, setSelectedEmoji] = useState("");
   const router = useRouter();
 
   // const [messagesSnapshot]= useCollection(collection(db, "chats").getDocs(router.query.id).collection("messages").orderBy("timestamp", "asc"))
@@ -75,6 +88,10 @@ const ChatScreen = ({ chat, messages }) => {
         block: "start",
     })
   }
+  function onClick(emojiData, event) {
+    setSelectedEmoji(emojiData.unified);
+  }
+
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -147,7 +164,27 @@ const ChatScreen = ({ chat, messages }) => {
         className={css.endOfMessage}></div>
       </div>
       <form className={css.inputContainer}>
-        <InsertEmoticonIcon />
+        {/* <div className={css.form}> */}
+
+        
+        <div className={css.EmojiPicker}>
+        {emoji &&  <EmojiPicker
+        // onEmojiClick={(event, emojiObject)=> setInput(input + emojiObject.emoji)}
+        onEmojiClick={(emojiData, event)=>{
+          setSelectedEmoji(emojiData.unified);
+          setInput(input + emojiData.emoji);
+        }}
+        autoFocusSearch={false}
+        width="63vw"
+        emojiStyle={EmojiStyle.APPLE}
+      pickerStyle={{width:'100%',  position: "absolute", top: "-325px"}}
+      /> }
+        </div>
+        
+     
+        <InsertEmoticonIcon
+        onClick={()=>setEmoji(!emoji)}
+        />
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -156,7 +193,16 @@ const ChatScreen = ({ chat, messages }) => {
         <button hidden disabled={!input} type="submit" onClick={sendMessage}>
           send message
         </button>
+        <IconButton
+        disabled={!input}
+        type="submit" onClick={sendMessage}
+        >
+        <SendIcon
+        className={css.sendIcon}/>
+        </IconButton>
+       
         <MicIcon />
+        {/* </div> */}
       </form>
     </div>
   );
