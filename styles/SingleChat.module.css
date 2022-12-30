@@ -1,6 +1,18 @@
 .chatIdContainer{
     display: flex;
 }
+.homeContainer {
+    background: #d5dbdb;
+    /* width: 100%;
+    height: 100%;
+    overflow: hidden; */
+  }
+  .greenBg {
+    background: #009788;
+    
+    height: 15vh;
+    z-index: -100;
+  }
 .chatPage{
     flex: 1;
     overflow: scroll;
@@ -22,6 +34,28 @@
     height: 80px;
     align-items: center;
     border-bottom: 1px solid whitesmoke;
+
+
+ 
+}
+.chatback{
+    background: #ece5d0;
+    top: 20px;
+    right: 20px;
+    left: 340px;
+    bottom: 20px;
+    position: absolute;
+    overflow: auto;
+    z-index: 100;
+   margin-left: 200px;
+    border-right: 1px solid whitesmoke;
+    height: 95vh;
+    min-width: 60%;
+    max-width: 70%;
+    overflow: hidden;
+    overflow-y: scroll;
+    -ms-overflow-style:none;
+    scrollbar-width: none;
 }
 .headerInfo{
     margin-left: 15px;
@@ -34,6 +68,31 @@
 .headerInfo > p{
     font-size: 14px;
     color: gray;
+}
+.showToggle{
+    position: absolute;
+    top: 70px;
+    right: 10px;
+    width: 190px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+.showToggle > ul{
+    list-style: none;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding-right: 0px;
+    padding-left: 0;
+}
+.showToggle > ul > li{
+    cursor: pointer;
+    margin-bottom: 10px;
+ padding: 10px;
+}
+.showToggle > ul > li:hover{
+
+ background-color:#f0f2f5;
 }
 .inputContainer{
     display: flex;
@@ -88,3 +147,25 @@ right: 0;
 .sendIcon{
     color:#1cda62d8;
 }
+
+@media screen and (max-width: 1024px) {
+    .chatback{
+        background: #ece5d0;
+        top: 20px;
+        right: 20px;
+        left: 80px;
+        bottom: 20px;
+        position: absolute;
+        overflow: auto;
+        z-index: 100;
+       margin-left: 200px;
+        border-right: 1px solid whitesmoke;
+        height: 95vh;
+        min-width: 60%;
+        max-width: 70%;
+        overflow: hidden;
+        overflow-y: scroll;
+        -ms-overflow-style:none;
+        scrollbar-width: none;
+    }
+  }

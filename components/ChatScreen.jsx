@@ -1,9 +1,10 @@
 import { Avatar, IconButton } from "@material-ui/core";
 import { useRouter } from "next/router";
-import React, { useRef, useState } from "react";
+import React, { Fragment, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
 import css from "../styles/SingleChat.module.css";
+import SearchIcon from "@material-ui/icons/Search";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import { useCollection } from "react-firebase-hooks/firestore";
@@ -34,6 +35,7 @@ import EmojiPicker, {
   SuggestionMode,
   SkinTonePickerLocation
 } from "emoji-picker-react";
+import Sidebar from "./Sidebar";
 
 // const useChatRef = collection(db, "chats");
 //   const q = query(useChatRef, collection("messages").orderBy("timestamp", "asc"));
@@ -44,6 +46,7 @@ const ChatScreen = ({ chat, messages }) => {
   const [user] = useAuthState(auth);
   const [input, setInput] = useState("");
   const [emoji, setEmoji] = useState(false);
+  const [show, setShow] = useState(false)
   const endOfMessageRef = useRef(null);
   const [selectedEmoji, setSelectedEmoji] = useState("");
   const router = useRouter();
@@ -119,6 +122,10 @@ const ChatScreen = ({ chat, messages }) => {
 
   return (
     <div>
+    <div className={css.homeContainer}>
+      
+      <div className={css.greenBg}/>
+      <div className={css.chatback}>
       <div className={css.chatHeader}>
         {
             recipient ? (
@@ -147,12 +154,28 @@ const ChatScreen = ({ chat, messages }) => {
           {/* <p>Last seen ...</p> */}
         </div>
         <div className={css.headerIcon}>
-          <IconButton>
-            <AttachFileIcon />
+          <IconButton  title='search...' >
+         <SearchIcon
+         
+         />
           </IconButton>
-          <IconButton>
+          <IconButton 
+          onClick={()=>{
+            setShow(!show)
+          }}
+          title='menu'>
             <MoreVertIcon />
           </IconButton>
+          {show && <div className={css.showToggle}>
+            <ul>
+              <li>contact info</li>
+              <li>select messages</li>
+              <li>close chat</li>
+              <li>delete chat</li>
+              <li>block</li>
+            </ul>
+          </div>
+            }
         </div>
       </div>
 
@@ -166,7 +189,9 @@ const ChatScreen = ({ chat, messages }) => {
       <form className={css.inputContainer}>
         {/* <div className={css.form}> */}
 
-        
+        <IconButton>
+            <AttachFileIcon />
+          </IconButton>
         <div className={css.EmojiPicker}>
         {emoji &&  <EmojiPicker
         // onEmojiClick={(event, emojiObject)=> setInput(input + emojiObject.emoji)}
@@ -204,6 +229,8 @@ const ChatScreen = ({ chat, messages }) => {
         <MicIcon />
         {/* </div> */}
       </form>
+      </div>
+    </div>
     </div>
   );
 };
