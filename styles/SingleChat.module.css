@@ -39,7 +39,9 @@
  
 }
 .chatback{
-    background: #ece5d0;
+    /* background: #ece5d0; */
+    background-image: url(../assets/whatsapp__default.png);
+    background-repeat: repeat;
     top: 20px;
     right: 20px;
     left: 340px;
@@ -118,8 +120,8 @@
 .messageContainer{
     padding: 30px;
     /* background-color: #e5ded8; */
-    background-image: url(../assets/whatsapp__default.png);
-    background-repeat: repeat;
+    /* background-image: url(../assets/whatsapp__default.png);
+    background-repeat: repeat; */
   /* overflow-y: scroll; */
     min-height: 90vh;
 }
@@ -153,7 +155,7 @@ right: 0;
 
 @media screen and (max-width: 1024px) {
     .chatback{
-        background: #ece5d0;
+        /* background: #ece5d0; */
         top: 20px;
         right: 20px;
         left: 80px;

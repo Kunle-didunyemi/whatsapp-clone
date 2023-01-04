@@ -9,6 +9,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import { useCollection } from "react-firebase-hooks/firestore";
 import SendIcon from '@material-ui/icons/Send';
+
 import {
   collection,
   doc,
@@ -27,15 +28,8 @@ import getRecipientEmail from "../utils/getRecipientEmail";
 import TimeAgo from "timeago-react";
 import EmojiPicker, {
   EmojiStyle,
-  SkinTones,
-  Theme,
-  Categories,
-  EmojiClickData,
-  Emoji,
-  SuggestionMode,
-  SkinTonePickerLocation
 } from "emoji-picker-react";
-import Sidebar from "./Sidebar";
+
 
 // const useChatRef = collection(db, "chats");
 //   const q = query(useChatRef, collection("messages").orderBy("timestamp", "asc"));
@@ -47,7 +41,7 @@ const ChatScreen = ({ chat, messages }) => {
   const [input, setInput] = useState("");
   const [emoji, setEmoji] = useState(false);
   const [show, setShow] = useState(false)
-  const endOfMessageRef = useRef(null);
+  const endOfMessageRef = useRef();
   const [selectedEmoji, setSelectedEmoji] = useState("");
   const router = useRouter();
 
@@ -91,9 +85,10 @@ const ChatScreen = ({ chat, messages }) => {
         block: "start",
     })
   }
-  function onClick(emojiData, event) {
-    setSelectedEmoji(emojiData.unified);
-  }
+
+  // function onClick(emojiData, event) {
+  //   setSelectedEmoji(emojiData.unified);
+  // }
 
 
   const sendMessage = (e) => {
@@ -115,6 +110,9 @@ const ChatScreen = ({ chat, messages }) => {
     });
     setInput("");
     scrollToButtom();
+    // useMutationObserver(endOfMessageRef, () => {
+    //   endOfMessageRef.current.scrollTop = endOfMessageRef.current.scrollHeight;
+    // });
   };
 
   const recipient = recipientSnapshot?.docs?.[0]?.data();
@@ -212,6 +210,7 @@ const ChatScreen = ({ chat, messages }) => {
         />
         <input
           value={input}
+          onFocus={()=>setEmoji(false)}
           onChange={(e) => setInput(e.target.value)}
           className={css.messageInput}
         />
@@ -221,6 +220,7 @@ const ChatScreen = ({ chat, messages }) => {
         <IconButton
         disabled={!input}
         type="submit" onClick={sendMessage}
+        
         >
         <SendIcon
         className={css.sendIcon}/>
