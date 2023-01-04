@@ -83,9 +83,9 @@ const ChatScreen = ({ chat, messages }) => {
 
   const scrollToButtom = () => {
     endOfMessageRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-    })
+      behavior: "smooth",
+      block: "start",
+  })
   }
 
   // function onClick(emojiData, event) {
