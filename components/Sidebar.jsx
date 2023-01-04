@@ -44,13 +44,13 @@ const Sidebar = () => {
   }, [])
   console.log('users..', allUsers);
 
-  const search = allUsers.filter((user) => {
-    if(searchInput) {
-      if(user.data().email.toLowerCase().includes(searchInput.toLocaleLowerCase())){
-        console.log(user.data().email);
-      }
-    }
-  })
+  // const search = allUsers.filter((user) => {
+  //   if(searchInput) {
+  //     if(user.data().email.toLowerCase().includes(searchInput.toLocaleLowerCase())){
+  //       console.log(user.data().email);
+  //     }
+  //   }
+  // })
   const createChat = () => {
     const input = prompt(
       "please enter the email addess/number of the user you want to chat with"

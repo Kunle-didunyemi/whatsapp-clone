@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }) {
      const usersRef = collection(db, "users");
 
       setDoc(doc(usersRef, user.uid), {
+        // displayName: user.username,
       email:user.email,
         lastSeen:serverTimestamp(),
         photoURL: user.photoURL

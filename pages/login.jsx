@@ -1,16 +1,22 @@
-import React, { useRef, useState } from 'react';
-import Head from 'next/head';
-import css from '../styles/Login.module.css';
+import React, { useRef, useState } from "react";
+import Head from "next/head";
+import css from "../styles/Login.module.css";
 // import { Button } from '@material-ui/core';
-import Logo from '../assets/logo.png'
-import Image from 'next/image';
-import { auth, provider } from '../firebase';
+import Logo from "../assets/logo.png";
+import Image from "next/image";
+import { auth, provider } from "../firebase";
 import GoogleIcon from "../assets/google-icon.svg";
 import { Phone } from "@material-ui/icons";
 import { Button, FormControl, Input, InputLabel } from "@material-ui/core";
 import {
-    signInWithPopup, signInWithPhoneNumber, RecaptchaVerifier
-  } from "firebase/auth";
+  signInWithPopup,
+  signInWithPhoneNumber,
+  RecaptchaVerifier,
+  updateProfile,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import Link from "next/link";
 
 // const Login = () => {
 //     const signIn = ()=>{
@@ -40,25 +46,75 @@ import {
 const Login = () => {
   const [code, setCode] = useState("");
   const [number, setNumber] = useState("");
+  const [expandForm, setExpandForm] = useState(false);
   const formRef = useRef();
   const containerRef = useRef();
+  const mainRef = useRef();
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const register = (e) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(
+      auth,
+      emailRef.current.value,
+      passwordRef.current.value
+    )
+      .then((authUser) => {
+        console.log(authUser);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+  const signIn = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(
+      auth,
+      emailRef.current.value,
+      passwordRef.current.value
+    )
+      .then((authUser) => {
+        // console.log(authUser);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+  const generateRecaptcha = () => {
+    window.recaptchaVerifier = new RecaptchaVerifier(
+      "recaptcha",
+      {
+        size: "invisible",
+        callback: (response) => {
+          // reCAPTCHA solved, allow signInWithPhoneNumber.
+          onSignInSubmit();
+        },
+      },
+      auth
+    );
+  };
 
   const handlePhoneNoLogin = (e) => {
     e.preventDefault();
+    generateRecaptcha();
     // let recaptcha = new firebase.auth.RecaptchaVerifier("recaptcha", { size: "visible" });
     let phoneNumber = `${code}${number}`;
 
     if (phoneNumber) {
-      signInWithPhoneNumber( auth, phoneNumber)
+      let appVerifier = window.recaptchaVerifier;
+      signInWithPhoneNumber(auth, phoneNumber, appVerifier)
         .then((res) => {
           let code = prompt("Please Enter the OTP: ");
           if (code == null) return;
           res
             .confirm(code)
-            .then((authUser) => {
+            .then(() => {
               const username = prompt("Enter Username: ");
-              return authUser.user.updateProfile({
-                displayName: username,
+              return updateProfile(user, {
+                email: username,
               });
             })
             .catch((err) => alert(err.message));
@@ -70,7 +126,7 @@ const Login = () => {
   };
 
   const signInWithGoogle = () => {
-      signInWithPopup(auth, provider)
+    signInWithPopup(auth, provider)
       .then((res) => res)
       .catch((err) => alert(err.message));
   };
@@ -84,28 +140,38 @@ const Login = () => {
     containerRef.current.style.display = "flex";
     formRef.current.style.display = "none";
   };
+  // const signinwithmail =()=>{
+  //   containerRef.current.style.display = "none";
+  //   formRef.current.style.display = "none";
+  //   mainRef.current.style.display = "flex";
+  // }
+
+  // const requestOtp = (e) => {
+  //   e.preventDefault();
+  //   setExpandForm(!expandForm);
+  // }
 
   return (
     <div className={css.login} id="login">
       <Head>
-             <title>Login</title>
-         </Head>
+        <title>Login</title>
+      </Head>
       <div ref={containerRef} className={css.login__container}>
-      <Image
-            src={Logo}
-            className={css.logo}
-            />
+        <Image src={Logo} className={css.logo} />
         <h1>Sign In To WhatsApp</h1>
         <button onClick={signInWithGoogle} className={css.login__googleBtn}>
           {/* <img src={GoogleIcon} alt="Google Icon" className={css.login__google} /> */}
           <span>Sign in with Google</span>
         </button>
-        <button onClick={signInWithPhone} className={css.login__phoneBtn}>
+        {/* <button onClick={signInWithPhone} className={css.login__phoneBtn}>
           <Phone />
           <span>Sign in with phone</span>
-        </button>
+        </button> */}
+
+        <button onClick={signInWithPhone}>sign up</button>
       </div>
-      <form ref={formRef} className={css.login__form}>
+      {/* <form ref={formRef}
+      className={css.login__form}>
         <h1>Enter Your phone number</h1>
         <div className={css.login__number}>
           <FormControl className={css.login__code}>
@@ -129,7 +195,50 @@ const Login = () => {
           </Button>
         </div>
         <p>By tapping Verify, an SMS may be sent. Message & data rates may apply.</p>
+      </form> */}
+
+      <form ref={formRef} className={css.login__form}>
+        <h1>Enter Your email </h1>
+        <div className={css.login__number}>
+          <FormControl className={css.login__code}>
+            <input ref={passwordRef} type="password" placeholder="Password" />
+          </FormControl>
+          <FormControl className={css.login__number}>
+            <InputLabel>password</InputLabel>
+            <input ref={emailRef} type="email" placeholder="Email" />
+          </FormControl>
+        </div>
+        <div className={css.recaptcha} id="recaptcha"></div>
+        <div className={css.login__buttons}>
+          <Button onClick={cancelPhoneSignIn}>Cancel</Button>
+          <Button onClick={signIn} type="submit">
+            Verify
+          </Button>
+          <Button onClick={register} type="submit">
+            sign up
+          </Button>
+        </div>
+        <p>
+          By tapping Verify, an SMS may be sent. Message & data rates may apply.
+        </p>
       </form>
+
+      {/* <form ref={mainRef}>
+        <h1>Sign In</h1>
+        <input ref={emailRef} type="email" placeholder="Email" />
+        <input ref={passwordRef} type="password" placeholder="Password" />
+        <button onClick={signIn} type="submit">
+          Sign In
+        </button>
+
+        <h4>
+          <span className="signupScreen_gray">New to Netflix? </span>{" "}
+          <span onClick={register} className="signupScreen_link">
+            {" "}
+            Sign Up now.
+          </span>
+        </h4>
+      </form> */}
     </div>
   );
 };

@@ -117,7 +117,10 @@
 }
 .messageContainer{
     padding: 30px;
-    background-color: #e5ded8;
+    /* background-color: #e5ded8; */
+    background-image: url(../assets/whatsapp__default.png);
+    background-repeat: repeat;
+  /* overflow-y: scroll; */
     min-height: 90vh;
 }
 .timestamp{
