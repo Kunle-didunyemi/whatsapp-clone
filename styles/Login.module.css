@@ -59,6 +59,32 @@
     width: 25% !important;
     margin-right: 1.5em !important;
   }
+  .login__email{
+    width: 100%!important;
+  }
+  .login__password{
+    width: 100%!important;
+
+  }
+  .login__email > input{
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 5px;
+    height: 30px;
+    outline: none;
+    background-color: inherit;
+  }
+  .login__password > label{
+    margin-top: 10px;
+  }
+  .login__password > input{
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 5px;
+    height: 30px;
+    outline: none;
+    background-color: inherit;
+  }
   .login__inputCode > .MuiInputBase-input {
     text-align: right !important;
   }

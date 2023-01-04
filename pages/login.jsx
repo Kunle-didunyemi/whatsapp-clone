@@ -7,7 +7,7 @@ import Image from "next/image";
 import { auth, provider } from "../firebase";
 import GoogleIcon from "../assets/google-icon.svg";
 import { Phone } from "@material-ui/icons";
-import { Button, FormControl, Input, InputLabel } from "@material-ui/core";
+import { Button, FormControl, Input, InputLabel, TextField } from "@material-ui/core";
 import {
   signInWithPopup,
   signInWithPhoneNumber,
@@ -46,7 +46,7 @@ import Link from "next/link";
 const Login = () => {
   const [code, setCode] = useState("");
   const [number, setNumber] = useState("");
-  const [expandForm, setExpandForm] = useState(false);
+  // const [email, setEmail] = useState(false);
   const formRef = useRef();
   const containerRef = useRef();
   const mainRef = useRef();
@@ -61,7 +61,7 @@ const Login = () => {
       passwordRef.current.value
     )
       .then((authUser) => {
-        console.log(authUser);
+        // console.log(authUser);
       })
       .catch((error) => {
         alert(error.message);
@@ -139,12 +139,13 @@ const Login = () => {
   const cancelPhoneSignIn = () => {
     containerRef.current.style.display = "flex";
     formRef.current.style.display = "none";
+    mainRef.current.style.display = "none";
   };
-  // const signinwithmail =()=>{
-  //   containerRef.current.style.display = "none";
-  //   formRef.current.style.display = "none";
-  //   mainRef.current.style.display = "flex";
-  // }
+  const signinwithmail =()=>{
+    containerRef.current.style.display = "none";
+    formRef.current.style.display = "none";
+    mainRef.current.style.display = "flex";
+  }
 
   // const requestOtp = (e) => {
   //   e.preventDefault();
@@ -163,14 +164,14 @@ const Login = () => {
           {/* <img src={GoogleIcon} alt="Google Icon" className={css.login__google} /> */}
           <span>Sign in with Google</span>
         </button>
-        {/* <button onClick={signInWithPhone} className={css.login__phoneBtn}>
+        <button onClick={signInWithPhone} className={css.login__phoneBtn}>
           <Phone />
           <span>Sign in with phone</span>
-        </button> */}
+        </button>
 
-        <button onClick={signInWithPhone}>sign up</button>
+        <button onClick={signinwithmail}>Sign up with Email</button>
       </div>
-      {/* <form ref={formRef}
+      <form ref={formRef}
       className={css.login__form}>
         <h1>Enter Your phone number</h1>
         <div className={css.login__number}>
@@ -195,31 +196,37 @@ const Login = () => {
           </Button>
         </div>
         <p>By tapping Verify, an SMS may be sent. Message & data rates may apply.</p>
-      </form> */}
+      </form>
 
-      <form ref={formRef} className={css.login__form}>
-        <h1>Enter Your email </h1>
+      <form ref={mainRef} className={css.login__form}>
+        <h1>ENTER YOUR EMAIL ADDRESS</h1>
         <div className={css.login__number}>
-          <FormControl className={css.login__code}>
-            <input ref={passwordRef} type="password" placeholder="Password" />
+        <FormControl className={css.login__email}>
+
+            <label>Email</label>
+            <input ref={emailRef} 
+            type="email"
+             placeholder=" enter your email" />
           </FormControl>
-          <FormControl className={css.login__number}>
-            <InputLabel>password</InputLabel>
-            <input ref={emailRef} type="email" placeholder="Email" />
+          <FormControl className={css.login__password}>
+          <label>password</label>
+            <input ref={passwordRef}
+             type="password" 
+             placeholder="enter your password" />
           </FormControl>
+   
         </div>
-        <div className={css.recaptcha} id="recaptcha"></div>
         <div className={css.login__buttons}>
           <Button onClick={cancelPhoneSignIn}>Cancel</Button>
-          <Button onClick={signIn} type="submit">
-            Verify
-          </Button>
+          
           <Button onClick={register} type="submit">
             sign up
           </Button>
         </div>
         <p>
-          By tapping Verify, an SMS may be sent. Message & data rates may apply.
+          Already have an account?  <Button onClick={signIn} type="submit">
+            sign in
+          </Button>
         </p>
       </form>
 
