@@ -18,6 +18,7 @@ function MyApp({ Component, pageProps }) {
       setDoc(doc(usersRef, user.uid), {
         // displayName: user.username,
       email:user.email,
+      phoneNumber: user.phoneNumber,
         lastSeen:serverTimestamp(),
         photoURL: user.photoURL
      }, {merge: true})

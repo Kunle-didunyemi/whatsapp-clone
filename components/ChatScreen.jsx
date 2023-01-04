@@ -58,7 +58,9 @@ const ChatScreen = ({ chat, messages }) => {
   //    const {messagesSnapshot} = useCollection(getDocs(query(collection(db, `chats/${router.query.id}/messages`), orderBy('timestamp', 'asc')))) ;
   const res = collection(db, "users")
   const k = query(res, where("email","==", getRecipientEmail(chat.users, user)))
+  // const n = query(res, where("phoneNumber","==", getRecipientEmail(chat.users, user)))
   const [recipientSnapshot]= useCollection(k);
+  // const [numberSnapshot]= useCollection(n);
 
   const showMessages = () => {
     if (messagesSnapshot) {
@@ -116,6 +118,7 @@ const ChatScreen = ({ chat, messages }) => {
   };
 
   const recipient = recipientSnapshot?.docs?.[0]?.data();
+  // const cipient = numberSnapshot?.docs?.[0]?.data();
   const recipientEmail = getRecipientEmail(chat.users, user);
 
   return (
@@ -126,7 +129,9 @@ const ChatScreen = ({ chat, messages }) => {
       <div className={css.chatback}>
       <div className={css.chatHeader}>
         {
-            recipient ? (
+            recipient 
+            // || cipient 
+            ? (
                 <Avatar
                 src={recipient?.photoURL}
                 />

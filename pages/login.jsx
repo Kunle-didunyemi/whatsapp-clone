@@ -6,6 +6,7 @@ import Logo from "../assets/logo.png";
 import Image from "next/image";
 import { auth, provider } from "../firebase";
 import GoogleIcon from "../assets/google-icon.svg";
+import MailIcon from '@material-ui/icons/Mail';
 import { Phone } from "@material-ui/icons";
 import { Button, FormControl, Input, InputLabel, TextField } from "@material-ui/core";
 import {
@@ -111,12 +112,12 @@ const Login = () => {
           if (code == null) return;
           res
             .confirm(code)
-            .then(() => {
-              const username = prompt("Enter Username: ");
-              return updateProfile(user, {
-                email: username,
-              });
-            })
+            // .then(() => {
+            //   const username = prompt("Enter Username: ");
+            //   return updateProfile(user, {
+            //     email: username,
+            //   });
+            // })
             .catch((err) => alert(err.message));
         })
         .catch((err) => alert(err.message));
@@ -169,7 +170,10 @@ const Login = () => {
           <span>Sign in with phone</span>
         </button>
 
-        <button onClick={signinwithmail}>Sign up with Email</button>
+        <button className={css.login__phoneBtn} onClick={signinwithmail}>
+          <MailIcon/>
+          <span>Sign up with Email</span>
+          </button>
       </div>
       <form ref={formRef}
       className={css.login__form}>

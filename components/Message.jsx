@@ -8,7 +8,7 @@ import css from '../styles/SingleChat.module.css'
 
 const Message = ({user, message}) => {
     const [userLoggedIn] = useAuthState(auth);
-    const TypeOfMessage = user === userLoggedIn.email ? Sender : Reciever;
+    const TypeOfMessage = user === userLoggedIn.email  ? Sender : Reciever;
   return (
     <div>
         <TypeOfMessage>{message.message}

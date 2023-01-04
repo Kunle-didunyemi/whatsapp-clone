@@ -42,7 +42,7 @@ const Sidebar = () => {
     }
     getAllUsers();
   }, [])
-  console.log('users..', allUsers);
+  // console.log('users..', allUsers);
 
   // const search = allUsers.filter((user) => {
   //   if(searchInput) {

@@ -26,7 +26,9 @@ const Chat = ({ users, id }) => {
 
 
   const [recipientSnapshot] = useCollection(query(collection(db, "users"), where("email", "==", getRecipientEmail(users, user))));
+  // const [numberSnapshot] = useCollection(query(collection(db, "users"), where("phoneNumber", "==", getRecipientEmail(users, user))));
   const recipient = recipientSnapshot?.docs?.[0]?.data();
+  // const cipient = numberSnapshot?.docs?.[0]?.data();
   // console.log(recipientEmail);
 //   console.log(recipientSnapshot);
   return (
@@ -34,7 +36,9 @@ const Chat = ({ users, id }) => {
     onClick={enterChat}
     className={css.chatContainer}>
         {
-            recipient ? (
+            recipient
+            //  || cipient
+              ? (
                 <Avatar
                 className={css.chatAvatar}
                 src={recipient?.photoURL}
