@@ -98,33 +98,33 @@ const Login = () => {
     );
   };
 
-  const handlePhoneNoLogin = (e) => {
-    e.preventDefault();
-    generateRecaptcha();
-    // let recaptcha = new firebase.auth.RecaptchaVerifier("recaptcha", { size: "visible" });
-    let phoneNumber = `${code}${number}`;
+  // const handlePhoneNoLogin = (e) => {
+  //   e.preventDefault();
+  //   generateRecaptcha();
+  //   // let recaptcha = new firebase.auth.RecaptchaVerifier("recaptcha", { size: "visible" });
+  //   let phoneNumber = `${code}${number}`;
 
-    if (phoneNumber) {
-      let appVerifier = window.recaptchaVerifier;
-      signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-        .then((res) => {
-          let code = prompt("Please Enter the OTP: ");
-          if (code == null) return;
-          res
-            .confirm(code)
-            // .then(() => {
-            //   const username = prompt("Enter Username: ");
-            //   return updateProfile(user, {
-            //     email: username,
-            //   });
-            // })
-            .catch((err) => alert(err.message));
-        })
-        .catch((err) => alert(err.message));
-    } else {
-      alert("Please Enter Phone Number");
-    }
-  };
+  //   if (phoneNumber) {
+  //     let appVerifier = window.recaptchaVerifier;
+  //     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+  //       .then((res) => {
+  //         let code = prompt("Please Enter the OTP: ");
+  //         if (code == null) return;
+  //         res
+  //           .confirm(code)
+  //           // .then(() => {
+  //           //   const username = prompt("Enter Username: ");
+  //           //   return updateProfile(user, {
+  //           //     email: username,
+  //           //   });
+  //           // })
+  //           .catch((err) => alert(err.message));
+  //       })
+  //       .catch((err) => alert(err.message));
+  //   } else {
+  //     alert("Please Enter Phone Number");
+  //   }
+  // };
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
@@ -161,14 +161,14 @@ const Login = () => {
       <div ref={containerRef} className={css.login__container}>
         <Image src={Logo} className={css.logo} />
         <h1>Sign In To WhatsApp</h1>
-        <button onClick={signInWithGoogle} className={css.login__googleBtn}>
-          {/* <img src={GoogleIcon} alt="Google Icon" className={css.login__google} /> */}
+        {/* <button onClick={signInWithGoogle} className={css.login__googleBtn}>
+          
           <span>Sign in with Google</span>
-        </button>
-        <button onClick={signInWithPhone} className={css.login__phoneBtn}>
+        </button> */}
+        {/* <button onClick={signInWithPhone} className={css.login__phoneBtn}>
           <Phone />
           <span>Sign in with phone</span>
-        </button>
+        </button> */}
 
         <button className={css.login__phoneBtn} onClick={signinwithmail}>
           <MailIcon/>
@@ -195,9 +195,9 @@ const Login = () => {
         <div className={css.recaptcha} id="recaptcha"></div>
         <div className={css.login__buttons}>
           <Button onClick={cancelPhoneSignIn}>Cancel</Button>
-          <Button onClick={handlePhoneNoLogin} type="submit">
+          {/* <Button onClick={handlePhoneNoLogin} type="submit">
             Verify
-          </Button>
+          </Button> */}
         </div>
         <p>By tapping Verify, an SMS may be sent. Message & data rates may apply.</p>
       </form>
